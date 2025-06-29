@@ -26,17 +26,18 @@ public class Injector {
         return INJECTOR;
     }
 
-    public Object getInstance(Class<?> interfaceClazz) {
+    @SuppressWarnings("unchecked")
+    public <T> T getInstance(Class<T> interfaceClazz) {
         Class<?> clazz = findImpl(interfaceClazz);
-
         if (!clazz.isAnnotationPresent(Component.class)) {
             throw new RuntimeException(
                     "The class " + clazz.getSimpleName() + " is not annotated with @Component"
             );
         }
-
+        if (instances.containsKey(clazz)) {
+            return (T) instances.get(clazz);
+        }
         Object clazzImplInstance = createNewInstance(clazz);
-
         Field[] declaredFields = clazz.getDeclaredFields();
         for (Field field : declaredFields) {
             if (field.isAnnotationPresent(Inject.class)) {
@@ -51,8 +52,7 @@ public class Injector {
                 }
             }
         }
-
-        return clazzImplInstance;
+        return (T) clazzImplInstance;
     }
 
     private Object createNewInstance(Class<?> clazz) {
@@ -72,7 +72,12 @@ public class Injector {
 
     private Class<?> findImpl(Class<?> interfaceClazz) {
         if (interfaceClazz.isInterface()) {
-            return INTERFACE_IMPLEMENTATIONS.get(interfaceClazz);
+            Class<?> impl = INTERFACE_IMPLEMENTATIONS.get(interfaceClazz);
+            if (impl == null) {
+                throw new RuntimeException("No implementation found for: "
+                        + interfaceClazz.getName());
+            }
+            return impl;
         }
         return interfaceClazz;
     }
