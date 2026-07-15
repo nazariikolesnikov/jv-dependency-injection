@@ -1,8 +1,6 @@
 # Java Core - Dependency Injection
 
-# Technologies
-![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
-![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+# Description
 
 This is a simple file parser project.
 In this project, you can find three interfaces with their implementations.
@@ -13,3 +11,8 @@ and `Inject` to mark fields that need to be initialized. If the `Component` anno
 NOTE: Pay attention to the annotation's visibility when you want to use it with reflection API, the `@Retention` property may help you configure it.
 
 [Try to avoid these common mistakes while solving task](./checklist.md)
+
+# Technologies
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+
